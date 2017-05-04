@@ -180,3 +180,31 @@ for (var i in bets) {
     }
 }
 
+///////////////////
+// CHARTS
+///////////////////
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawCurveTypes);
+
+function drawCurveTypes() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'Y');
+    data.addColumn('number', 'NBU Rate');
+
+    for (var i in nbuRates) {
+        data.addRow([parseInt(i), nbuRates[i].getRate()]);
+    }
+
+    var options = {
+        hAxis: {
+            title: 'Time'
+        },
+        vAxis: {
+            title: 'Rate & Bet'
+        }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+}
+

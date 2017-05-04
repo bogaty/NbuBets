@@ -18,3 +18,6 @@ Galina Bogachenko 29,99 20
 Sergii Pokhvala 30,31 8
 Alexey Gurov 35.00 16
 Алексей Авраменко 39,85 15
+
+
+// https://jsfiddle.net/chk8rkce/1/
