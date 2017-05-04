@@ -130,7 +130,8 @@ var nbuRates = [
     new DayRate(50, new Date(2017, 4, 27), 26.588876),	
     new DayRate(51, new Date(2017, 4, 28), 26.551453),	
     new DayRate(52, new Date(2017, 5, 3), 26.560930),
-    new DayRate(53, new Date(2017, 5, 4), 26.523425)
+    new DayRate(53, new Date(2017, 5, 4), 26.523425),
+    new DayRate(54, new Date(2017, 5, 5), 26.485778)
     // to be continued ...
 ];
 
@@ -159,9 +160,37 @@ function getDayWinner(bets, DayRate) {
     return winner;
 }
 
+/** Required for building appropriate graph */
+var GraphOptions = {
+    // float variables to store the min/max rate, during the bets.
+    minRate : 0,
+    maxRate : 0,
+    // main graph is building in the gaps: [(minRate - delta), ... , (maxRate + delta)]
+    delta : 1
+}
+/**
+ * @param {GraphOptions} go - Graph options
+ * @param {DayRate[]} nbuRates - all the NBU rates
+ */
+function calculateMinMaxRate(go, rates) {
+    if (rates.length > 0) {
+        go.minRate = rates[0].getRate();
+        go.maxRate = rates[0].getRate();
+    } 
+    for (let i = 1; i < rates.length; i++) {
+        if (rates[i].getRate() < go.minRate) {
+            go.minRate = rates[i].getRate();
+        }
+        if (rates[i].getRate() > go.maxRate) {
+            go.maxRate = rates[i].getRate();
+        }
+    }
+}
+
 ///////////////////
 // MAIN
 ///////////////////
+
 console.log('_________Day Winners______________');
 for (var i in nbuRates) {
     var person = getDayWinner(bets, nbuRates[i]);
@@ -183,6 +212,7 @@ for (var i in bets) {
 ///////////////////
 // CHARTS
 ///////////////////
+calculateMinMaxRate(GraphOptions, nbuRates);
 google.charts.load('current', {packages: ['corechart', 'line']});
 google.charts.setOnLoadCallback(drawCurveTypes);
 
@@ -191,17 +221,41 @@ function drawCurveTypes() {
     data.addColumn('number', 'Y');
     data.addColumn('number', 'NBU Rate');
 
-    for (var i in nbuRates) {
-        data.addRow([parseInt(i), nbuRates[i].getRate()]);
+    // determining the bets to be on the graph
+    let betsOnGraph = [];
+    for (let i = bets.length - 1; i >= 0; i--) {
+        if ((GraphOptions.minRate - GraphOptions.delta) < bets[i].getBet() && 
+            (GraphOptions.maxRate + GraphOptions.delta) > bets[i].getBet()) 
+        {
+            betsOnGraph.push(bets[i]);
+        }
+    }
+
+    for (let i in betsOnGraph) {
+        data.addColumn('number', betsOnGraph[i].getName());
+    }     
+
+    for (let i in nbuRates) {
+        var dataSet = [parseInt(i), nbuRates[i].getRate()];
+        for (let j in betsOnGraph) {
+            dataSet.push(parseFloat(betsOnGraph[j].getBet()));
+        }
+        data.addRow(dataSet);
     }
 
     var options = {
         hAxis: {
-            title: 'Time'
+            title: 'Days'
         },
         vAxis: {
-            title: 'Rate & Bet'
-        }
+            title: 'Rate & Bet',
+            // ticks: [25, 26, 27, 28],
+            //maxValue: (GraphOptions.maxRate + GraphOptions.delta),
+            //minValue: (GraphOptions.minRate - GraphOptions.delta)
+        },
+        
+        // width: 400,
+        height: 1000
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
