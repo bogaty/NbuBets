@@ -131,7 +131,17 @@ var nbuRates = [
     new DayRate(51, new Date(2017, 4, 28), 26.551453),	
     new DayRate(52, new Date(2017, 5, 3), 26.560930),
     new DayRate(53, new Date(2017, 5, 4), 26.523425),
-    new DayRate(54, new Date(2017, 5, 5), 26.485778)
+    new DayRate(54, new Date(2017, 5, 5), 26.485778),
+    new DayRate(55, new Date(2017, 5, 10), 26.509341),
+    new DayRate(56, new Date(2017, 5, 11), 26.455859),
+    new DayRate(57, new Date(2017, 5, 12), 26.428930),
+    new DayRate(58, new Date(2017, 5, 13), 26.474312),
+    new DayRate(59, new Date(2017, 5, 15), 26.474312),
+    new DayRate(60, new Date(2017, 5, 16), 26.471947),
+    new DayRate(61, new Date(2017, 5, 17), 26.433401),
+    new DayRate(62, new Date(2017, 5, 18), 26.417446),
+    new DayRate(63, new Date(2017, 5, 19), 26.393442),
+    new DayRate(64, new Date(2017, 5, 22), 26.369659),
     // to be continued ...
 ];
 
@@ -214,9 +224,12 @@ for (var i in bets) {
 ///////////////////
 calculateMinMaxRate(GraphOptions, nbuRates);
 google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawCurveTypes);
+google.charts.setOnLoadCallback(function() {
+    drawLineChart();
+    drawPieChart();
+});
 
-function drawCurveTypes() {
+function drawLineChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'Y');
     data.addColumn('number', 'NBU Rate');
@@ -254,11 +267,34 @@ function drawCurveTypes() {
             //minValue: (GraphOptions.minRate - GraphOptions.delta)
         },
         
-        // width: 400,
-        height: 1000
+        // width: 800,
+        height: 800
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
     chart.draw(data, options);
+}
+
+function drawPieChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'name');
+    data.addColumn('number', 'wins');
+
+    for(let i=0; i < bets.length; i++) {
+        if (bets[i].getWinDaysNumber() > 0) {
+            data.addRow([bets[i].getName(), bets[i].getWinDaysNumber()]);
+        }
+    }
+
+    var options = {
+        title: 'Total Win days',
+
+        width: 800,
+        height: 500
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+    chart.draw(data, options);
+
 }
 
