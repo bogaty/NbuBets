@@ -4,9 +4,25 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
     <script charset="utf-8" src="script.js"></script>
-     
+    <link rel="stylesheet" href="style.css" type="text/css" />
+
 </head>
 <body>
-    <div id="chart_div"></div>
-    <div id="pie_chart"></div>
+    <div id="winner">
+        <p>The winner is</p>
+        <div id="winner_name"></div>
+        <p>, with bet = </p>
+        <div id="winner_bet"></div>
+        <p>, NBU rate = </p>
+        <div id="nbu_rate"></div>
+    </div>
+    <div class='chart-container'>
+        <p calss='header'>NBU rate during the bet flow</p>
+        <div id="chart_div"></div>
+    </div>
+    <div class='chart-container'>
+        <p calss='header'>Total win days per person</p>
+        <div id="pie_chart"></div>
+    </div>
+
 </body>

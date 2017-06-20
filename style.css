@@ -1,0 +1,54 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: 'Calibri';
+    font-size: 25px;
+    color: grey;
+
+    min-width: 750px;
+    max-width: 1920px;
+}
+#winner {
+    height: 100px;
+    width: 100%;
+    /*background-color: lightsalmon;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Calibri';
+    font-size: 25px;
+    color: grey;
+}
+#winner_name {
+    margin-left: 8px;
+    color: #491c00;
+    font-style: bold;
+}
+#winner_bet {
+    margin-left: 8px;
+    color: darkred;
+    font-style: bold;
+}
+#nbu_rate {
+    margin-left: 8px;
+    color: darkblue;
+    font-style: bold;
+}
+#chart_div {
+    width: 100%;
+}
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    /*background-color: lightblue;*/
+    overflow: hidden;
+}
+.header {
+    margin-top: 20px;
+}

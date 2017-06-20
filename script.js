@@ -118,17 +118,17 @@ var nbuRates = [
     new DayRate(38, new Date(2017, 4, 10), 26.973995),
     new DayRate(39, new Date(2017, 4, 11), 26.933241),
     new DayRate(40, new Date(2017, 4, 12), 26.893785),
-    new DayRate(41, new Date(2017, 4, 13), 26.875671),	
-    new DayRate(42, new Date(2017, 4, 14), 26.864209),	
-    new DayRate(43, new Date(2017, 4, 18), 26.812058),	
-    new DayRate(44, new Date(2017, 4, 19), 26.844959),	
-    new DayRate(45, new Date(2017, 4, 20), 26.787082),	
-    new DayRate(46, new Date(2017, 4, 21), 26.756734),	
-    new DayRate(47, new Date(2017, 4, 24), 26.732780),	
+    new DayRate(41, new Date(2017, 4, 13), 26.875671),
+    new DayRate(42, new Date(2017, 4, 14), 26.864209),
+    new DayRate(43, new Date(2017, 4, 18), 26.812058),
+    new DayRate(44, new Date(2017, 4, 19), 26.844959),
+    new DayRate(45, new Date(2017, 4, 20), 26.787082),
+    new DayRate(46, new Date(2017, 4, 21), 26.756734),
+    new DayRate(47, new Date(2017, 4, 24), 26.732780),
     new DayRate(48, new Date(2017, 4, 25), 26.673697),
-    new DayRate(49, new Date(2017, 4, 26), 26.631832),	
-    new DayRate(50, new Date(2017, 4, 27), 26.588876),	
-    new DayRate(51, new Date(2017, 4, 28), 26.551453),	
+    new DayRate(49, new Date(2017, 4, 26), 26.631832),
+    new DayRate(50, new Date(2017, 4, 27), 26.588876),
+    new DayRate(51, new Date(2017, 4, 28), 26.551453),
     new DayRate(52, new Date(2017, 5, 3), 26.560930),
     new DayRate(53, new Date(2017, 5, 4), 26.523425),
     new DayRate(54, new Date(2017, 5, 5), 26.485778),
@@ -142,6 +142,26 @@ var nbuRates = [
     new DayRate(62, new Date(2017, 5, 18), 26.417446),
     new DayRate(63, new Date(2017, 5, 19), 26.393442),
     new DayRate(64, new Date(2017, 5, 22), 26.369659),
+    new DayRate(65, new Date(2017, 5, 23), 26.341917),
+    new DayRate(66, new Date(2017, 5, 24), 26.304507),
+    new DayRate(67, new Date(2017, 5, 25), 26.266118),
+    new DayRate(68, new Date(2017, 5, 26), 26.276670),
+    new DayRate(69, new Date(2017, 5, 29), 26.345368),
+    new DayRate(70, new Date(2017, 5, 30), 26.387789),
+    new DayRate(71, new Date(2017, 5, 31), 26.352778),
+    new DayRate(72, new Date(2017, 6, 1), 26.310335),
+    new DayRate(73, new Date(2017, 6, 2), 26.270953),
+    new DayRate(74, new Date(2017, 6, 6), 26.280938),
+    new DayRate(75, new Date(2017, 6, 7), 26.246584),
+    new DayRate(76, new Date(2017, 6, 8), 26.205414),
+    new DayRate(77, new Date(2017, 6, 9), 26.149214),
+    new DayRate(78, new Date(2017, 6, 12), 26.124759),
+    new DayRate(79, new Date(2017, 6, 13), 26.070702),
+    new DayRate(80, new Date(2017, 6, 14), 25.995212),
+    new DayRate(81, new Date(2017, 6, 15), 26.014971),
+    new DayRate(82, new Date(2017, 6, 16), 26.007115),
+    new DayRate(83, new Date(2017, 6, 19), 26.021900),
+    new DayRate(84, new Date(2017, 6, 20), 26.023126)
     // to be continued ...
 ];
 
@@ -186,7 +206,7 @@ function calculateMinMaxRate(go, rates) {
     if (rates.length > 0) {
         go.minRate = rates[0].getRate();
         go.maxRate = rates[0].getRate();
-    } 
+    }
     for (let i = 1; i < rates.length; i++) {
         if (rates[i].getRate() < go.minRate) {
             go.minRate = rates[i].getRate();
@@ -201,23 +221,22 @@ function calculateMinMaxRate(go, rates) {
 // MAIN
 ///////////////////
 
-console.log('_________Day Winners______________');
-for (var i in nbuRates) {
-    var person = getDayWinner(bets, nbuRates[i]);
-    person.increaseWinDayRates();
 
-    if (i == (nbuRates.length - 1)) {
-        console.log('Current winner:  ' + person.getName() + ' Bet = ' + person.getBet() + '; Real Rate = ' + nbuRates[i].getRate());
-    }
-}
+(function calculateEachDayWinner() {
+    for (var i in nbuRates) {
+        var person = getDayWinner(bets, nbuRates[i]);
+        person.increaseWinDayRates();
 
-console.log('_________Total Day wins______________');
-for (var i in bets) {
-    // TODO add sort:
-    if (bets[i].getWinDaysNumber() > 0) {
-        console.log(bets[i].getName() + '; wins = ' + bets[i].getWinDaysNumber())
+        if (i == (nbuRates.length - 1)) {
+            $(document).ready(function()
+            {
+                $('#winner_name').append(person.getName());
+                $('#winner_bet').append(person.getBet());
+                $('#nbu_rate').append(nbuRates[nbuRates.length - 1].getRate());
+            });
+        }
     }
-}
+})();
 
 ///////////////////
 // CHARTS
@@ -237,8 +256,8 @@ function drawLineChart() {
     // determining the bets to be on the graph
     let betsOnGraph = [];
     for (let i = bets.length - 1; i >= 0; i--) {
-        if ((GraphOptions.minRate - GraphOptions.delta) < bets[i].getBet() && 
-            (GraphOptions.maxRate + GraphOptions.delta) > bets[i].getBet()) 
+        if ((GraphOptions.minRate - GraphOptions.delta) < bets[i].getBet() &&
+            (GraphOptions.maxRate + GraphOptions.delta) > bets[i].getBet())
         {
             betsOnGraph.push(bets[i]);
         }
@@ -246,7 +265,7 @@ function drawLineChart() {
 
     for (let i in betsOnGraph) {
         data.addColumn('number', betsOnGraph[i].getName());
-    }     
+    }
 
     for (let i in nbuRates) {
         var dataSet = [parseInt(i), nbuRates[i].getRate()];
@@ -258,17 +277,22 @@ function drawLineChart() {
 
     var options = {
         hAxis: {
-            title: 'Days'
+            title: 'Days',
+            width: 50
         },
         vAxis: {
             title: 'Rate & Bet',
-            // ticks: [25, 26, 27, 28],
-            //maxValue: (GraphOptions.maxRate + GraphOptions.delta),
-            //minValue: (GraphOptions.minRate - GraphOptions.delta)
+            width: 50
         },
-        
-        // width: 800,
-        height: 800
+
+        height: $('body').innerWidth() * 0.4,
+        chartArea: {
+            left: 50,
+            right: 200,
+            top: 10,
+            bottom: 50,
+            width: $('body').innerWidth() * 0.8
+        }
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -298,3 +322,7 @@ function drawPieChart() {
 
 }
 
+$(window).resize(function() {
+  drawLineChart();
+  drawPieChart();
+});
