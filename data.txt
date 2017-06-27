@@ -21,3 +21,5 @@ Alexey Gurov 35.00 16
 
 
 // https://jsfiddle.net/chk8rkce/1/
+
+// https://jsfiddle.net/de0v3b4s/show/

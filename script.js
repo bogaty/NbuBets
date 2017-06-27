@@ -161,8 +161,13 @@ var nbuRates = [
     new DayRate(81, new Date(2017, 6, 15), 26.014971),
     new DayRate(82, new Date(2017, 6, 16), 26.007115),
     new DayRate(83, new Date(2017, 6, 19), 26.021900),
-    new DayRate(84, new Date(2017, 6, 20), 26.023126)
-    // to be continued ...
+    new DayRate(84, new Date(2017, 6, 20), 26.023126),
+    new DayRate(85, new Date(2017, 6, 21), 26.034880),
+    new DayRate(86, new Date(2017, 6, 22), 26.023602),
+    new DayRate(87, new Date(2017, 6, 23), 26.025695),
+    new DayRate(88, new Date(2017, 6, 26), 26.031112),
+    new DayRate(89, new Date(2017, 6, 27), 26.036606)
+    // new DayRate(90, new Date(2017, 6, 29), x)    // TADA !!!
 ];
 
 /**
